@@ -1,0 +1,21 @@
+<configuration>
+    <!-- Console appender for clean test output -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-5level %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Only show WARN and ERROR from frameworks -->
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.apache.kafka" level="WARN"/>
+    <logger name="com.zaxxer" level="WARN"/>
+
+    <!-- Show our test output -->
+    <logger name="com.example.usersync" level="INFO"/>
+
+    <root level="WARN">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
