@@ -1,20 +1,20 @@
 package com.example.usersync.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
-
-import java.time.Duration;
 
 @Configuration
 public class RestTemplateConfig {
 
-    @Value("${app.rest-api.timeout:5000}")
-    private int timeout;
-
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplate();
+        // Use HttpComponentsClientHttpRequestFactory to support PATCH method
+        HttpClient httpClient = HttpClients.createDefault();
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(httpClient);
+        return new RestTemplate(factory);
     }
 }
