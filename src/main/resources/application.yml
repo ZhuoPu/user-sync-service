@@ -2,16 +2,10 @@ spring:
   application:
     name: user-sync-service
 
-  # H2 Database Configuration
+  # SQLite Database Configuration
   datasource:
-    url: jdbc:h2:mem:userdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    url: jdbc:sqlite:tasks.db
+    driver-class-name: org.sqlite.JDBC
 
   # JPA Configuration
   jpa:
@@ -21,6 +15,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.community.dialect.SQLiteDialect
 
   # Kafka Configuration
   kafka:
@@ -37,11 +32,22 @@ spring:
 app:
   kafka:
     topic: user-data-sync
+    test-topic: hcm-user-onboard-test
   rest-api:
     base-url: http://localhost:8081/api
     sync-endpoint: /users
   sync:
     interval-seconds: 60
+  hcm:
+    base-url: https://aitable.ai
+    datasheet-id: dsthiermXySxq5drDV
+    view-id: viwE79FRt4XA8
+    api-token: uskuUFS0kLofBBVTuVUWKLT
+  iam:
+    base-url: https://aitable.ai
+    datasheet-id: dsthiermXySxq5drDV
+    view-id: viwE79FRt4XA8
+    api-token: uskuUFS0kLofBBVTuVUWKLT
 
 logging:
   level:
