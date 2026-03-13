@@ -14,6 +14,7 @@ import java.time.Instant;
 @AllArgsConstructor
 public class UserEvent {
 
+    // IAM user fields
     @JsonProperty("user_id")
     private String userId;
 
@@ -31,6 +32,13 @@ public class UserEvent {
     @JsonProperty("phone_number")
     private String phoneNumber;
 
+    // HCM user fields
+    private String employeeId;
+    private String title;
+    private String system;
+    private String phone;
+    private Boolean active;    // 在职
+
     @JsonProperty("event_type")
     private EventType eventType;
 
@@ -41,6 +49,6 @@ public class UserEvent {
     private Long dataVersion;
 
     public enum EventType {
-        CREATE, UPDATE, DELETE
+        CREATE, UPDATE, DELETE, HCM_USER_ONBOARDED
     }
 }
