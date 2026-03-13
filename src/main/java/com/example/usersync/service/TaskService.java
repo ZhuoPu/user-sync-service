@@ -52,4 +52,14 @@ public interface TaskService {
      * Get next TODO task (oldest first).
      */
     TaskDto getNextTodo();
+
+    /**
+     * Retry a completed task.
+     * Resets status to TODO and clears result, then executes the task.
+     *
+     * @param id the task id
+     * @return the executed task result
+     * @throws NoSuchElementException if task not found
+     */
+    TaskDto retry(Long id);
 }

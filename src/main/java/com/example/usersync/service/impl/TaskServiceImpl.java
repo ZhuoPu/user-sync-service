@@ -132,6 +132,28 @@ public class TaskServiceImpl implements TaskService {
         return todoTasks.isEmpty() ? null : todoTasks.get(0).toDto();
     }
 
+    @Override
+    @Transactional
+    public TaskDto retry(Long id) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Task not found: " + id));
+
+        // Only allow retrying DONE tasks
+        if (task.getStatus() != Task.TaskStatus.DONE) {
+            throw new IllegalStateException("Can only retry tasks with DONE status, current: " + task.getStatus());
+        }
+
+        // Reset to TODO and clear previous results
+        task.setStatus(Task.TaskStatus.TODO);
+        task.setResult(null);
+        task.setResultTimestamp(null);
+        taskRepository.save(task);
+        log.info("Reset task for retry: id={}", id);
+
+        // Execute the task
+        return execute(id);
+    }
+
     /**
      * Execute a task by calling the service method with the DTO.
      */

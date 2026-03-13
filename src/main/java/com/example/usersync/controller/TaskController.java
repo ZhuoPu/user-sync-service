@@ -68,4 +68,9 @@ public class TaskController {
     public ResponseEntity<TaskDto> executeTask(@PathVariable Long id) {
         return ResponseEntity.ok(taskService.execute(id));
     }
+
+    @PostMapping("/{id}/retry")
+    public ResponseEntity<TaskDto> retryTask(@PathVariable Long id) {
+        return ResponseEntity.ok(taskService.retry(id));
+    }
 }
